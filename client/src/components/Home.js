@@ -90,7 +90,7 @@ const Home = ({ user, logout }) => {
           convo.id = message.conversationId
         }
       })
-      setConversations(conversations)
+      setConversations([...conversations])
     },
     [setConversations, conversations]
   )
@@ -110,11 +110,12 @@ const Home = ({ user, logout }) => {
 
       conversations.forEach((convo) => {
         if (convo.id === message.conversationId) {
-          convo.messages.push(message)
+          convo.messages.unshift(message)
           convo.latestMessageText = message.text
         }
       })
-      setConversations(conversations)
+
+      setConversations([...conversations])
     },
     [setConversations, conversations]
   )

@@ -110,7 +110,7 @@ const Home = ({ user, logout }) => {
 
       conversations.forEach((convo) => {
         if (convo.id === message.conversationId) {
-          convo.messages.unshift(message)
+          convo.messages.push(message)
           convo.latestMessageText = message.text
         }
       })
@@ -186,7 +186,17 @@ const Home = ({ user, logout }) => {
     const fetchConversations = async () => {
       try {
         const { data } = await axios.get('/api/conversations')
-        setConversations(data)
+        //Reverse order of messages to reflect chronological order
+        const updatedData = data.map((conversation) => {
+          const messagesInOrder = conversation.messages
+            .slice(0)
+            .reverse()
+            .map((message) => {
+              return message
+            })
+          return { ...conversation, messages: messagesInOrder }
+        })
+        setConversations(updatedData)
       } catch (error) {
         console.error(error)
       }

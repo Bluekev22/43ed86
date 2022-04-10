@@ -196,16 +196,10 @@ const Home = ({ user, logout }) => {
       try {
         const { data } = await axios.get('/api/conversations')
         //Reverse order of messages to reflect chronological order
-        const updatedData = data.map((conversation) => {
-          const messagesInOrder = conversation.messages
-            .slice(0)
-            .reverse()
-            .map((message) => {
-              return message
-            })
-          return { ...conversation, messages: messagesInOrder }
+        data.forEach((user) => {
+          user.messages = user.messages.reverse()
         })
-        setConversations(updatedData)
+        setConversations(data)
       } catch (error) {
         console.error(error)
       }

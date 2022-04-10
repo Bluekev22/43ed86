@@ -110,15 +110,21 @@ const Home = ({ user, logout }) => {
         setConversations((prev) => [newConvo, ...prev])
       }
 
-      conversations.forEach((convo) => {
-        if (convo.id === message.conversationId) {
-          convo.messages.push(message)
-          convo.latestMessageText = message.text
-          console.log(convo)
-        }
-      })
-
-      setConversations([...conversations])
+      setConversations((prev) =>
+        prev.map((convo) => {
+          if (convo.id === message.conversationId) {
+            const convoCopy = {
+              ...convo,
+              messages: [...convo.messages],
+            }
+            convoCopy.messages.push(message)
+            convoCopy.latestMessageText = message.text
+            return convoCopy
+          } else {
+            return convo
+          }
+        })
+      )
     },
     [setConversations, conversations]
   )

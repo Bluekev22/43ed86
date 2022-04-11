@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import {
   Grid,
   Box,
   Typography,
-  Button,
   FormControl,
   TextField,
 } from '@material-ui/core'
@@ -14,9 +13,23 @@ import LinkBtn from './components/Login/LinkButton'
 import LoginButton from './components/Login/LoginButton'
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    flexDirection: 'row',
+    alignItems: 'stretch',
+    [theme.breakpoints.up('sm')]: {
+      justifyContent: 'center',
+    },
+    [theme.breakpoints.down('lg')]: {
+      justifyContent: 'space-between',
+    },
+  },
+
   accountQuestion: {
-    marginTop: '42px',
+    fontSize: '14px',
+    marginTop: '6vh',
+
     color: theme.palette.secondary.main,
+    textAlign: 'center',
   },
   loginStatement: {
     fontWeight: 600,
@@ -57,21 +70,17 @@ const Login = ({ user, login }) => {
   }, [user, history])
 
   return (
-    <Grid
-      container
-      direction="row"
-      justifyContent="space-between"
-      alignItems="stretch"
-    >
-      <Grid container item xl={3} lg={3} md={3} sm={12}>
+    <Grid container className={classes.root}>
+      <Grid container item xl={4} lg={4} md={3} sm={12}>
         <SideCard />
       </Grid>
       <Grid
         container
         item
-        xl={9}
+        xl={4}
         lg={7}
         md={6}
+        sm={12}
         direction="column"
         justifyContent="flex-start"
         alignItems="center"
@@ -82,14 +91,16 @@ const Login = ({ user, login }) => {
           direction="row"
           justifyContent="flex-end"
           alignItems="center"
-          spacing={4}
+          //   spacing={4}
         >
-          <Grid item>
+          <Grid item xl={4} lg={3} md={5} sm={4} xs={9}>
             <Typography className={classes.accountQuestion}>
               Don't have an account?
             </Typography>
           </Grid>
-          <LinkBtn href="/register" text="Create account" />
+          <Grid item xl={4} lg={4} md={5} sm={6} xs={9}>
+            <LinkBtn href="/register" text="Create account" />
+          </Grid>
         </Grid>
         <Grid
           container
@@ -134,42 +145,6 @@ const Login = ({ user, login }) => {
               <LoginButton text="Login" />
             </form>
           </Box>
-          {/* 
-          <Box>
-            <Grid container item xl={8} lg={8}>
-              <Typography>Need to register?</Typography>
-              <Link href="/register" to="/register">
-                <Button>Register</Button>
-              </Link>
-            </Grid>
-            <form onSubmit={handleLogin}>
-              <Grid>
-                <Grid>
-                  <FormControl margin="normal" required>
-                    <TextField
-                      aria-label="username"
-                      label="Username"
-                      name="username"
-                      type="text"
-                    />
-                  </FormControl>
-                </Grid>
-                <FormControl margin="normal" required>
-                  <TextField
-                    label="password"
-                    aria-label="password"
-                    type="password"
-                    name="password"
-                  />
-                </FormControl>
-                <Grid>
-                  <Button type="submit" variant="contained" size="large">
-                    Login
-                  </Button>
-                </Grid>
-              </Grid>
-            </form>
-          </Box> */}
         </Grid>
       </Grid>
     </Grid>

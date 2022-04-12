@@ -7,6 +7,8 @@ import bubble from '../../assets/bubble.svg'
 const useStyles = makeStyles(() => ({
   bgImage: {
     position: 'relative',
+
+    margin: 'auto',
   },
   imageOverlay: {
     position: 'absolute',

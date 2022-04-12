@@ -12,7 +12,13 @@ const useStyles = makeStyles((theme) => ({
     width: '170px',
     height: '54px',
     marginTop: '6vh',
-    marginRight: '6vw',
+    [theme.breakpoints.down('sm')]: {
+      marginLeft: '2vw',
+    },
+    [theme.breakpoints.down('xs')]: {
+      marginLeft: '0vw',
+      marginTop: '3vh',
+    },
   },
 }))
 

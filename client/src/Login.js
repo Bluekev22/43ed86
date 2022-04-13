@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { Grid, Typography, FormControl, TextField } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useMediaQuery, useTheme } from "@material-ui/core";
 import SideCard from "./components/Login/SideCard";
 import LinkContainer from "./components/Login/LinkContainer";
-import LoginSignUpButton from "./components/Login/LoginSignUpButton";
 import Header from "./components/Login/Header";
+import Form from "./components/Login/Form";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -52,23 +52,8 @@ const useStyles = makeStyles((theme) => ({
     },
     [theme.breakpoints.down("xs")]: {
       width: "70vw",
+      marginTop: "6vh",
     },
-  },
-  textField: {
-    marginTop: "2vh",
-    paddingTop: "2vh",
-    width: "390px",
-    [theme.breakpoints.between("xs", "sm")]: {
-      marginRight: "16vw",
-      width: "350px",
-    },
-    [theme.breakpoints.down("xs")]: {
-      width: "70vw",
-    },
-  },
-  forgotPassword: {
-    color: theme.palette.primary.main,
-    fontSize: "12px",
   },
 }));
 
@@ -121,37 +106,7 @@ const Login = ({ user, login }) => {
         >
           <Grid item className={classes.loginContainer}>
             <Header statement="Welcome back!" />
-            <form onSubmit={handleLogin}>
-              <FormControl margin="normal" required>
-                <TextField
-                  className={classes.textField}
-                  aria-label="E-mail address"
-                  label="E-mail address"
-                  name="E-mail address"
-                  type="text"
-                />
-              </FormControl>
-              <FormControl margin="normal" required>
-                <TextField
-                  className={classes.textField}
-                  label="Password"
-                  aria-label="Password"
-                  type="Password"
-                  name="Password"
-                  InputProps={{
-                    endAdornment: (
-                      <Typography className={classes.forgotPassword}>
-                        Forgot?
-                      </Typography>
-                    ),
-                    classes: {
-                      adornedEnd: classes.adornedEnd,
-                    },
-                  }}
-                />
-              </FormControl>
-              <LoginSignUpButton text="Login" />
-            </form>
+            <Form form="login" handler={handleLogin} />
           </Grid>
         </Grid>
       </Grid>

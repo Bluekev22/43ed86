@@ -12,6 +12,7 @@ import SideCard from "./components/Login/SideCard";
 import LinkContainer from "./components/Login/LinkContainer";
 import LoginSignUpButton from "./components/Login/LoginSignUpButton";
 import Header from "./components/Login/Header";
+import Form from "./components/Login/Form";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -57,19 +58,7 @@ const useStyles = makeStyles((theme) => ({
     },
     [theme.breakpoints.down("xs")]: {
       width: "70vw",
-    },
-  },
-
-  textField: {
-    marginTop: "2vh",
-    paddingTop: "2vh",
-    width: "390px",
-    [theme.breakpoints.between("xs", "sm")]: {
-      marginRight: "16vw",
-      width: "350px",
-    },
-    [theme.breakpoints.down("xs")]: {
-      width: "70vw",
+      marginTop: "6vh",
     },
   },
 }));
@@ -131,67 +120,11 @@ const Signup = ({ user, register }) => {
         >
           <Grid item className={classes.loginContainer}>
             <Header statement="Create an account" />
-            <form onSubmit={handleRegister}>
-              <Grid>
-                <Grid>
-                  <FormControl>
-                    <TextField
-                      className={classes.textField}
-                      aria-label="username"
-                      label="Username"
-                      name="username"
-                      type="text"
-                      required
-                    />
-                  </FormControl>
-                </Grid>
-                <Grid>
-                  <FormControl>
-                    <TextField
-                      className={classes.textField}
-                      label="E-mail address"
-                      aria-label="e-mail address"
-                      type="email"
-                      name="email"
-                      required
-                    />
-                  </FormControl>
-                </Grid>
-                <Grid>
-                  <FormControl error={!!formErrorMessage.confirmPassword}>
-                    <TextField
-                      className={classes.textField}
-                      aria-label="password"
-                      label="Password"
-                      type="password"
-                      inputProps={{ minLength: 6 }}
-                      name="password"
-                      required
-                    />
-                    <FormHelperText>
-                      {formErrorMessage.confirmPassword}
-                    </FormHelperText>
-                  </FormControl>
-                </Grid>
-                <Grid>
-                  <FormControl error={!!formErrorMessage.confirmPassword}>
-                    <TextField
-                      className={classes.textField}
-                      label="Confirm Password"
-                      aria-label="confirm password"
-                      type="password"
-                      inputProps={{ minLength: 6 }}
-                      name="confirmPassword"
-                      required
-                    />
-                    <FormHelperText>
-                      {formErrorMessage.confirmPassword}
-                    </FormHelperText>
-                  </FormControl>
-                </Grid>
-                <LoginSignUpButton text="Create" />
-              </Grid>
-            </form>
+            <Form
+              form="signup"
+              handler={handleRegister}
+              formErrorMessage={formErrorMessage}
+            />
           </Grid>
         </Grid>
       </Grid>

@@ -4,7 +4,7 @@ import { Grid, Typography, FormControl, TextField } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import SideCard from "./components/Login/SideCard";
 import LinkContainer from "./components/Login/LinkContainer";
-import LoginButton from "./components/Login/LoginButton";
+import LoginSignUpButton from "./components/Login/LoginSignUpButton";
 import Header from "./components/Login/Header";
 
 const useStyles = makeStyles((theme) => ({
@@ -147,7 +147,7 @@ const Login = ({ user, login }) => {
                   }}
                 />
               </FormControl>
-              <LoginButton text="Login" />
+              <LoginSignUpButton text="Login" />
             </form>
           </Grid>
         </Grid>

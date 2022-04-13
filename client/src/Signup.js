@@ -9,7 +9,7 @@ import {
 import { makeStyles } from "@material-ui/core/styles";
 import SideCard from "./components/Login/SideCard";
 import LinkContainer from "./components/Login/LinkContainer";
-import LoginButton from "./components/Login/LoginButton";
+import LoginSignUpButton from "./components/Login/LoginSignUpButton";
 import Header from "./components/Login/Header";
 
 const useStyles = makeStyles((theme) => ({
@@ -186,7 +186,7 @@ const Signup = ({ user, register }) => {
                     </FormHelperText>
                   </FormControl>
                 </Grid>
-                <LoginButton text="Create" />
+                <LoginSignUpButton text="Create" />
               </Grid>
             </form>
           </Grid>

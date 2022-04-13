@@ -4,8 +4,7 @@ import { Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useMediaQuery, useTheme } from "@material-ui/core";
 import SideCard from "./components/Login/SideCard";
-import LinkContainer from "./components/Login/LinkContainer";
-import LoginContainer from "./components/Login/LoginContainer";
+import FormContainer from "./components/Login/FormContainer";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,17 +22,6 @@ const useStyles = makeStyles((theme) => ({
       flexDirection: "column",
       justifyContent: "center",
       alignItems: "center",
-    },
-  },
-
-  entireFormContainer: {
-    flexDirection: "column",
-    alignItems: "center",
-    [theme.breakpoints.up("sm")]: {
-      justifyContent: "flex-start",
-    },
-    [theme.breakpoints.down("sm")]: {
-      justifyContent: "center",
     },
   },
 }));
@@ -69,29 +57,15 @@ const Signup = ({ user, register }) => {
   return (
     <Grid container className={classes.root}>
       {matches ? null : <SideCard />}
-
-      <Grid
-        container
-        item
-        xl={4}
-        lg={7}
-        md={6}
-        sm={12}
-        xs={12}
-        className={classes.entireFormContainer}
-      >
-        <LinkContainer
-          href="/login"
-          text="Login"
-          question="Already have an account?"
-        />
-        <LoginContainer
-          statement="Create an account"
-          form="signup"
-          handler={handleRegister}
-          formErrorMessage={formErrorMessage}
-        />
-      </Grid>
+      <FormContainer
+        href="/login"
+        text="Login"
+        question="Already have an account?"
+        statement="Create an account"
+        form="signup"
+        handler={handleRegister}
+        formErrorMessage={formErrorMessage}
+      />
     </Grid>
   );
 };

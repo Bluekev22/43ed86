@@ -1,15 +1,16 @@
-import React, { useState } from 'react';
-import { FormControl, FilledInput } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import React, { useState } from "react";
+import { FormControl, FilledInput, InputAdornment } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import contentCopyIcon from "../../assets/contentCopyIcon.svg";
 
 const useStyles = makeStyles(() => ({
   root: {
-    justifySelf: 'flex-end',
+    justifySelf: "flex-end",
     marginTop: 15,
   },
   input: {
     height: 70,
-    backgroundColor: '#F4F6FA',
+    backgroundColor: "#F4F6FA",
     borderRadius: 8,
     marginBottom: 20,
   },
@@ -17,7 +18,7 @@ const useStyles = makeStyles(() => ({
 
 const Input = ({ otherUser, conversationId, user, postMessage }) => {
   const classes = useStyles();
-  const [text, setText] = useState('');
+  const [text, setText] = useState("");
 
   const handleChange = (event) => {
     setText(event.target.value);
@@ -35,7 +36,7 @@ const Input = ({ otherUser, conversationId, user, postMessage }) => {
       sender: conversationId ? null : user,
     };
     await postMessage(reqBody);
-    setText('');
+    setText("");
   };
 
   return (
@@ -47,6 +48,21 @@ const Input = ({ otherUser, conversationId, user, postMessage }) => {
           placeholder="Type something..."
           value={text}
           name="text"
+          endAdornment={
+            <InputAdornment position="end">
+              <label for="file-input">
+                <img
+                  style={{
+                    cursor: "pointer",
+                    filter:
+                      "invert(95%) sepia(5%) saturate(166%) hue-rotate(182deg) brightness(83%) contrast(82%)",
+                  }}
+                  src={contentCopyIcon}
+                />
+              </label>
+              <input style={{ display: "none" }} id="file-input" type="file" />
+            </InputAdornment>
+          }
           onChange={handleChange}
         />
       </FormControl>

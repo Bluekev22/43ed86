@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
+import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import {
   Grid,
   Typography,
   FormControl,
   TextField,
   FormHelperText,
-} from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
-import SideCard from './components/Login/SideCard'
-import LinkContainer from './components/Login/LinkContainer'
-import LoginButton from './components/Login/LoginButton'
+} from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import SideCard from './components/Login/SideCard';
+import LinkContainer from './components/Login/LinkContainer';
+import LoginButton from './components/Login/LoginButton';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   loginContainer: {
-    marginTop: '6vh',
+    marginTop: '9vh',
     [theme.breakpoints.up('sm')]: {
       width: '390px',
       marginRight: '16vw',
@@ -88,33 +88,33 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.primary.main,
     fontSize: '12px',
   },
-}))
+}));
 
 const Signup = ({ user, register }) => {
-  const history = useHistory()
-  const classes = useStyles()
+  const history = useHistory();
+  const classes = useStyles();
 
-  const [formErrorMessage, setFormErrorMessage] = useState({})
+  const [formErrorMessage, setFormErrorMessage] = useState({});
 
   const handleRegister = async (event) => {
-    event.preventDefault()
-    const form = event.currentTarget
-    const formElements = form.elements
-    const username = formElements.username.value
-    const email = formElements.email.value
-    const password = formElements.password.value
-    const confirmPassword = formElements.confirmPassword.value
+    event.preventDefault();
+    const form = event.currentTarget;
+    const formElements = form.elements;
+    const username = formElements.username.value;
+    const email = formElements.email.value;
+    const password = formElements.password.value;
+    const confirmPassword = formElements.confirmPassword.value;
 
     if (password !== confirmPassword) {
-      setFormErrorMessage({ confirmPassword: 'Passwords must match' })
-      return
+      setFormErrorMessage({ confirmPassword: 'Passwords must match' });
+      return;
     }
-    await register({ username, email, password })
-  }
+    await register({ username, email, password });
+  };
 
   useEffect(() => {
-    if (user && user.id) history.push('/home')
-  }, [user, history])
+    if (user && user.id) history.push('/home');
+  }, [user, history]);
 
   return (
     <Grid container className={classes.root}>
@@ -222,7 +222,7 @@ const Signup = ({ user, register }) => {
         </Grid>
       </Grid>
     </Grid>
-  )
-}
+  );
+};
 
-export default Signup
+export default Signup;

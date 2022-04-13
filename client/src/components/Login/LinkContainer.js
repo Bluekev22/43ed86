@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.secondary.main,
     [theme.breakpoints.up('sm')]: {
       textAlign: 'end',
-      marginRight: '5.5vw',
+      marginRight: '3vw',
     },
     [theme.breakpoints.down('sm')]: {
       textAlign: 'end',

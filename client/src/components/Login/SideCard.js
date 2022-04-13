@@ -1,14 +1,13 @@
-import React from 'react'
-import { Grid, Box, Typography } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
-import bgImage from '../../assets/bgImage.png'
-import bubble from '../../assets/bubble.svg'
+import React from 'react';
+import { Grid, Box, Typography } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import bgImage from '../../assets/bgImage.png';
+import bubble from '../../assets/bubble.svg';
 
 const useStyles = makeStyles(() => ({
   bgImage: {
+    maxHeight: '696px',
     position: 'relative',
-
-    margin: 'auto',
   },
   imageOverlay: {
     position: 'absolute',
@@ -36,15 +35,19 @@ const useStyles = makeStyles(() => ({
     textAlign: 'center',
     lineHeight: '40px',
   },
-}))
+}));
 
 const SideCard = () => {
-  const classes = useStyles()
+  const classes = useStyles();
   return (
     <Grid item>
       <Box className={classes.bgImage}>
         <Box className={classes.imageOverlay}></Box>
-        <img src={bgImage} alt="People texting" />
+        <img
+          style={{ maxHeight: '696px' }}
+          src={bgImage}
+          alt="People texting"
+        />
         <Box className={classes.textBubble}>
           <img src={bubble} alt="Text bubble" />
         </Box>
@@ -53,7 +56,7 @@ const SideCard = () => {
         </Typography>
       </Box>
     </Grid>
-  )
-}
+  );
+};
 
-export default SideCard
+export default SideCard;

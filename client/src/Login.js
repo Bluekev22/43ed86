@@ -1,12 +1,13 @@
-import React, { useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
-import { Grid, Typography, FormControl, TextField } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
-import SideCard from './components/Login/SideCard'
-import LinkContainer from './components/Login/LinkContainer'
-import LoginButton from './components/Login/LoginButton'
+import React, { useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
+import { Grid, Typography, FormControl, TextField } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import SideCard from './components/Login/SideCard';
+import LinkContainer from './components/Login/LinkContainer';
+import LoginButton from './components/Login/LoginButton';
 
 const useStyles = makeStyles((theme) => ({
+  height: '100vh',
   root: {
     [theme.breakpoints.up('lg')]: {
       flexDirection: 'row',
@@ -25,6 +26,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   sideCardContainer: {
+    height: '100vh',
     [theme.breakpoints.down('sm')]: {
       justifyContent: 'center',
       margin: 'auto',
@@ -32,6 +34,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   entireFormContainer: {
+    height: '100vh',
     flexDirection: 'column',
     alignItems: 'center',
     [theme.breakpoints.up('sm')]: {
@@ -43,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   loginContainer: {
-    marginTop: '6vh',
+    marginTop: '9vh',
     [theme.breakpoints.up('sm')]: {
       width: '390px',
       marginRight: '16vw',
@@ -63,6 +66,7 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 600,
     fontSize: '26px',
     lineHeight: '40px',
+    textAlign: 'Center',
   },
 
   textField: {
@@ -81,25 +85,25 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.primary.main,
     fontSize: '12px',
   },
-}))
+}));
 
 const Login = ({ user, login }) => {
-  const classes = useStyles()
-  const history = useHistory()
+  const classes = useStyles();
+  const history = useHistory();
 
   const handleLogin = async (event) => {
-    event.preventDefault()
-    const form = event.currentTarget
-    const formElements = form.elements
-    const username = formElements.username.value
-    const password = formElements.password.value
+    event.preventDefault();
+    const form = event.currentTarget;
+    const formElements = form.elements;
+    const username = formElements.username.value;
+    const password = formElements.password.value;
 
-    await login({ username, password })
-  }
+    await login({ username, password });
+  };
 
   useEffect(() => {
-    if (user && user.id) history.push('/home')
-  }, [user, history])
+    if (user && user.id) history.push('/home');
+  }, [user, history]);
 
   return (
     <Grid container className={classes.root}>
@@ -177,7 +181,7 @@ const Login = ({ user, login }) => {
         </Grid>
       </Grid>
     </Grid>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;

@@ -5,8 +5,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { useMediaQuery, useTheme } from "@material-ui/core";
 import SideCard from "./components/Login/SideCard";
 import LinkContainer from "./components/Login/LinkContainer";
-import Header from "./components/Login/Header";
-import Form from "./components/Login/Form";
+import LoginContainer from "./components/Login/LoginContainer";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,24 +34,6 @@ const useStyles = makeStyles((theme) => ({
     },
     [theme.breakpoints.down("sm")]: {
       justifyContent: "center",
-    },
-  },
-
-  loginContainer: {
-    marginTop: "9vh",
-    [theme.breakpoints.up("sm")]: {
-      width: "390px",
-      marginRight: "16vw",
-    },
-    [theme.breakpoints.down("sm")]: {
-      width: "350px",
-      marginRight: "2vw",
-      marginLeft: "2vw",
-      marginBottom: "12vh",
-    },
-    [theme.breakpoints.down("xs")]: {
-      width: "70vw",
-      marginTop: "6vh",
     },
   },
 }));
@@ -96,19 +77,11 @@ const Login = ({ user, login }) => {
           text="Create account"
           question="Don't have an account?"
         />
-
-        <Grid
-          container
-          item
-          direction="column"
-          justifyContent="center"
-          alignItems="center"
-        >
-          <Grid item className={classes.loginContainer}>
-            <Header statement="Welcome back!" />
-            <Form form="login" handler={handleLogin} />
-          </Grid>
-        </Grid>
+        <LoginContainer
+          statement="Welcome back!"
+          form="login"
+          handler={handleLogin}
+        />
       </Grid>
     </Grid>
   );

@@ -1,36 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { Grid } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
-import { useMediaQuery, useTheme } from "@material-ui/core";
-import SideCard from "./components/Login/SideCard";
-import FormContainer from "./components/Login/FormContainer";
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    [theme.breakpoints.up("lg")]: {
-      flexDirection: "row",
-      justifyContent: "center",
-      alignItems: "stretch",
-    },
-    [theme.breakpoints.between("sm", "lg")]: {
-      flexDirection: "row",
-      justifyContent: "space-between",
-      alignItems: "stretch",
-    },
-    [theme.breakpoints.down("sm")]: {
-      flexDirection: "column",
-      justifyContent: "center",
-      alignItems: "center",
-    },
-  },
-}));
+import Root from "./components/Login/Root";
 
 const Signup = ({ user, register }) => {
   const history = useHistory();
-  const theme = useTheme();
-  const matches = useMediaQuery(theme.breakpoints.down("sm"));
-  const classes = useStyles();
 
   const [formErrorMessage, setFormErrorMessage] = useState({});
 
@@ -55,18 +28,15 @@ const Signup = ({ user, register }) => {
   }, [user, history]);
 
   return (
-    <Grid container className={classes.root}>
-      {matches ? null : <SideCard />}
-      <FormContainer
-        href="/login"
-        text="Login"
-        question="Already have an account?"
-        statement="Create an account"
-        form="signup"
-        handler={handleRegister}
-        formErrorMessage={formErrorMessage}
-      />
-    </Grid>
+    <Root
+      href="/login"
+      text="Login"
+      question="Already have an account?"
+      statement="Create an account"
+      form="signup"
+      handler={handleRegister}
+      formErrorMessage={formErrorMessage}
+    />
   );
 };
 

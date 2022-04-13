@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { Grid, Typography, FormControl, TextField } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import { useMediaQuery, useTheme } from "@material-ui/core";
 import SideCard from "./components/Login/SideCard";
 import LinkContainer from "./components/Login/LinkContainer";
 import LoginSignUpButton from "./components/Login/LoginSignUpButton";
@@ -73,6 +74,8 @@ const useStyles = makeStyles((theme) => ({
 
 const Login = ({ user, login }) => {
   const classes = useStyles();
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.down("sm"));
   const history = useHistory();
 
   const handleLogin = async (event) => {
@@ -91,7 +94,7 @@ const Login = ({ user, login }) => {
 
   return (
     <Grid container className={classes.root}>
-      <SideCard />
+      {matches ? null : <SideCard />}
 
       <Grid
         container

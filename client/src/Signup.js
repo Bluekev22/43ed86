@@ -7,6 +7,7 @@ import {
   FormHelperText,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import { useMediaQuery, useTheme } from "@material-ui/core";
 import SideCard from "./components/Login/SideCard";
 import LinkContainer from "./components/Login/LinkContainer";
 import LoginSignUpButton from "./components/Login/LoginSignUpButton";
@@ -75,6 +76,8 @@ const useStyles = makeStyles((theme) => ({
 
 const Signup = ({ user, register }) => {
   const history = useHistory();
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.down("sm"));
   const classes = useStyles();
 
   const [formErrorMessage, setFormErrorMessage] = useState({});
@@ -101,7 +104,7 @@ const Signup = ({ user, register }) => {
 
   return (
     <Grid container className={classes.root}>
-      <SideCard />
+      {matches ? null : <SideCard />}
 
       <Grid
         container

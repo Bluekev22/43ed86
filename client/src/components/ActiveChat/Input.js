@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FormControl, FilledInput, InputAdornment } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import contentCopyIcon from "../../assets/contentCopyIcon.svg";
+require("dotenv").config();
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -24,10 +25,34 @@ const Input = ({ otherUser, conversationId, user, postMessage }) => {
     setText(event.target.value);
   };
 
+  const uploadImage = (files) => {
+    const CLOUD_CREDENTIALS = process.env.REACT_APP_CLOUD_CREDENTIALS;
+
+    console.log(CLOUD_CREDENTIALS);
+    console.log(files);
+    const formData = new FormData();
+    formData.append("file", files[0]);
+    formData.append("upload_preset", CLOUD_CREDENTIALS);
+    console.log(formData);
+
+    fetch(`https://api.cloudinary.com/v1_1/kevinshank/image/upload`, {
+      method: "POST",
+      body: formData,
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data);
+      });
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const form = event.currentTarget;
+
     const formElements = form.elements;
+
     // add sender user info if posting to a brand new convo, so that the other user will have access to username, profile pic, etc.
     const reqBody = {
       text: formElements.text.value,
@@ -60,7 +85,12 @@ const Input = ({ otherUser, conversationId, user, postMessage }) => {
                   src={contentCopyIcon}
                 />
               </label>
-              <input style={{ display: "none" }} id="file-input" type="file" />
+              <input
+                style={{ display: "none" }}
+                id="file-input"
+                type="file"
+                onChange={(e) => uploadImage(e.target.files)}
+              />
             </InputAdornment>
           }
           onChange={handleChange}

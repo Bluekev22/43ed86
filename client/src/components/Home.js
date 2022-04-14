@@ -52,7 +52,6 @@ const Home = ({ user, logout }) => {
   const saveMessage = async (body) => {
     try {
       const { data } = await axios.post("/api/messages", body);
-      console.log(data);
       return data;
     } catch (err) {
       console.log(err);

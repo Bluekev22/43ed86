@@ -20,20 +20,18 @@ const useStyles = makeStyles(() => ({
 const Input = ({ otherUser, conversationId, user, postMessage }) => {
   const classes = useStyles();
   const [text, setText] = useState("");
+  const [attachments, setAttachments] = useState([]);
 
   const handleChange = (event) => {
     setText(event.target.value);
   };
 
-  const uploadImage = (files) => {
+  const uploadImage = (file) => {
     const CLOUD_CREDENTIALS = process.env.REACT_APP_CLOUD_CREDENTIALS;
-
-    console.log(CLOUD_CREDENTIALS);
-    console.log(files);
+    console.log(file);
     const formData = new FormData();
-    formData.append("file", files[0]);
+    formData.append("file", file);
     formData.append("upload_preset", CLOUD_CREDENTIALS);
-    console.log(formData);
 
     fetch(`https://api.cloudinary.com/v1_1/kevinshank/image/upload`, {
       method: "POST",
@@ -43,14 +41,15 @@ const Input = ({ otherUser, conversationId, user, postMessage }) => {
         return response.json();
       })
       .then((data) => {
+        const imageURL = data.url;
         console.log(data);
+        setAttachments((prev) => [...prev, imageURL]);
       });
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     const form = event.currentTarget;
-
     const formElements = form.elements;
 
     // add sender user info if posting to a brand new convo, so that the other user will have access to username, profile pic, etc.
@@ -59,9 +58,11 @@ const Input = ({ otherUser, conversationId, user, postMessage }) => {
       recipientId: otherUser.id,
       conversationId,
       sender: conversationId ? null : user,
+      attachments: attachments,
     };
     await postMessage(reqBody);
     setText("");
+    setAttachments([]);
   };
 
   return (
@@ -89,7 +90,7 @@ const Input = ({ otherUser, conversationId, user, postMessage }) => {
                 style={{ display: "none" }}
                 id="file-input"
                 type="file"
-                onChange={(e) => uploadImage(e.target.files)}
+                onChange={(e) => uploadImage(e.target.files[0])}
               />
             </InputAdornment>
           }

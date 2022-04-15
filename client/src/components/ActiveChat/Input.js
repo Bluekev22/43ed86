@@ -28,7 +28,6 @@ const Input = ({ otherUser, conversationId, user, postMessage }) => {
 
   const uploadImage = (file) => {
     const CLOUD_CREDENTIALS = process.env.REACT_APP_CLOUD_CREDENTIALS;
-    console.log(file);
     const formData = new FormData();
     formData.append("file", file);
     formData.append("upload_preset", CLOUD_CREDENTIALS);

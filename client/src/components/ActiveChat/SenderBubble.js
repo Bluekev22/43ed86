@@ -20,11 +20,18 @@ const useStyles = makeStyles(() => ({
     letterSpacing: -0.2,
     padding: 8,
     fontWeight: "bold",
-    textAlign: "center",
   },
   bubble: {
     background: "#F4F6FA",
     borderRadius: "10px 10px 0 10px",
+  },
+  bubbleWithTextAndPhoto: {
+    background: "#F4F6FA",
+    borderRadius: "0 0 10px 10px",
+  },
+
+  imageContainer: {
+    display: "flex",
   },
 
   oneImage: {
@@ -43,43 +50,56 @@ const useStyles = makeStyles(() => ({
     borderRadius: "10px 10px 0 10px",
     marginLeft: "8px",
   },
+  multipleImagesWithText: {
+    width: "100px",
+    height: "77px",
+    borderRadius: "10px 10px 0 0",
+    marginLeft: "8px",
+  },
 }));
 
 const SenderBubble = ({ time, text, attachments }) => {
   console.log(attachments);
   const classes = useStyles();
 
-  if (attachments.length && text) {
+  if (attachments?.length && text) {
     return (
       <Box className={classes.root}>
         <Typography className={classes.date}>{time}</Typography>
-        <Box className={classes.bubble}>
+        <Box className={classes.imageContainer}>
           {attachments.length > 1 ? (
-            attachments.map((attachment) => (
-              <img className={classes.multipleImages} src={attachment} />
+            attachments.map((attachment, index) => (
+              <img
+                key={index}
+                className={classes.multipleImagesWithText}
+                src={attachment}
+              />
             ))
           ) : (
             <img className={classes.oneImageWithText} src={attachments} />
           )}
-
+        </Box>
+        <Box className={classes.bubbleWithTextAndPhoto}>
           <Typography className={classes.text}>{text}</Typography>
         </Box>
       </Box>
     );
-  } else if (attachments.length) {
+  } else if (attachments?.length) {
     return (
       <Box className={classes.root}>
         <Typography className={classes.date}>{time}</Typography>
-        <Box className={classes.bubble}>
+        <Box className={classes.imageContainer}>
           {attachments.length > 1 ? (
-            attachments.map((attachment) => (
-              <img className={classes.multipleImages} src={attachment} />
+            attachments.map((attachment, index) => (
+              <img
+                key={index}
+                className={classes.multipleImages}
+                src={attachment}
+              />
             ))
           ) : (
             <img className={classes.oneImage} src={attachments} />
           )}
-
-          <Typography className={classes.text}>{text}</Typography>
         </Box>
       </Box>
     );

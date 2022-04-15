@@ -37,7 +37,11 @@ const Input = ({ otherUser, conversationId, user, postMessage }) => {
       body: formData,
     })
       .then((response) => {
-        return response.json();
+        if (response.status >= 200 && response.status <= 299) {
+          return response.json();
+        } else {
+          throw Error(response.statusText);
+        }
       })
       .then((data) => {
         const imageURL = data.url;
@@ -75,7 +79,7 @@ const Input = ({ otherUser, conversationId, user, postMessage }) => {
           name="text"
           endAdornment={
             <InputAdornment position="end">
-              <label for="file-input">
+              <label htmlFor="file-input">
                 <img
                   style={{
                     cursor: "pointer",

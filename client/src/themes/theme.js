@@ -1,24 +1,33 @@
-import { createMuiTheme } from "@material-ui/core";
+import { createMuiTheme } from '@material-ui/core'
 
 export const theme = createMuiTheme({
   typography: {
-    fontFamily: "Open Sans, sans-serif",
+    fontFamily: 'Open Sans, sans-serif',
     fontSize: 14,
     button: {
-      textTransform: "none",
+      textTransform: 'none',
       letterSpacing: 0,
-      fontWeight: "bold"
-    }
+      fontWeight: 'bold',
+    },
   },
   overrides: {
     MuiInput: {
       input: {
-        fontWeight: "bold"
-      }
-    }
+        fontWeight: 'bold',
+      },
+    },
   },
   palette: {
-    primary: { main: "#3A8DFF" },
-    secondary: { main: "#B0B0B0" }
-  }
-});
+    primary: { main: '#3A8DFF' },
+    secondary: { main: '#B0B0B0' },
+  },
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 538,
+      md: 900,
+      lg: 1200,
+      xl: 1450,
+    },
+  },
+})

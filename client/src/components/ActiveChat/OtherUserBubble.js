@@ -26,7 +26,7 @@ const useStyles = makeStyles(() => ({
   },
   bubbleWithTextAndPhoto: {
     backgroundImage: "linear-gradient(225deg, #6CC1FF 0%, #3A8DFF 100%)",
-    borderRadius: "0 0 10px 10px",
+    borderRadius: "10px 10px 0 0",
   },
   text: {
     fontSize: 14,
@@ -60,7 +60,7 @@ const useStyles = makeStyles(() => ({
   multipleImagesWithText: {
     width: "100px",
     height: "77px",
-    borderRadius: "10px 10px 0 0",
+    borderRadius: "0 0 10px 10px",
     marginRight: "8px",
   },
 }));
@@ -68,7 +68,33 @@ const useStyles = makeStyles(() => ({
 const OtherUserBubble = ({ text, time, otherUser, attachments }) => {
   const classes = useStyles();
 
-  if (attachments?.length && text) {
+  if (attachments?.length > 1 && text) {
+    return (
+      <Box>
+        <Avatar
+          alt={otherUser.username}
+          src={otherUser.photoUrl}
+          className={classes.avatar}
+        />
+        <Box className={classes.root}>
+          <Box className={classes.bubbleWithTextAndPhoto}>
+            <Typography className={classes.text}>{text}</Typography>
+          </Box>
+
+          <Box className={classes.imageContainer}>
+            {attachments.map((attachment, index) => (
+              <img
+                key={index}
+                className={classes.multipleImagesWithText}
+                src={attachment}
+              />
+            ))}
+          </Box>
+          <Typography className={classes.usernameDate}>{time}</Typography>
+        </Box>
+      </Box>
+    );
+  } else if (attachments?.length === 1 && text) {
     return (
       <Box>
         <Avatar
@@ -79,17 +105,7 @@ const OtherUserBubble = ({ text, time, otherUser, attachments }) => {
         <Box className={classes.root}>
           <Typography className={classes.usernameDate}>{time}</Typography>
           <Box className={classes.imageContainer}>
-            {attachments.length > 1 ? (
-              attachments.map((attachment, index) => (
-                <img
-                  key={index}
-                  className={classes.multipleImagesWithText}
-                  src={attachment}
-                />
-              ))
-            ) : (
-              <img className={classes.oneImageWithText} src={attachments} />
-            )}
+            {<img className={classes.oneImageWithText} src={attachments} />}
           </Box>
           <Box className={classes.bubbleWithTextAndPhoto}>
             <Typography className={classes.text}>{text}</Typography>

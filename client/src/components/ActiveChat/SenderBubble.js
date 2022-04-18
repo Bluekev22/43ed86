@@ -61,22 +61,30 @@ const useStyles = makeStyles(() => ({
 const SenderBubble = ({ time, text, attachments }) => {
   const classes = useStyles();
 
-  if (attachments?.length && text) {
+  if (attachments?.length > 1 && text) {
+    return (
+      <Box className={classes.root}>
+        <Box className={classes.bubbleWithTextAndPhoto}>
+          <Typography className={classes.text}>{text}</Typography>
+        </Box>
+        <Box className={classes.imageContainer}>
+          {attachments.map((attachment, index) => (
+            <img
+              key={index}
+              className={classes.multipleImagesWithText}
+              src={attachment}
+            />
+          ))}
+        </Box>
+        <Typography className={classes.date}>{time}</Typography>
+      </Box>
+    );
+  } else if (attachments?.length === 1 && text) {
     return (
       <Box className={classes.root}>
         <Typography className={classes.date}>{time}</Typography>
         <Box className={classes.imageContainer}>
-          {attachments.length > 1 ? (
-            attachments.map((attachment, index) => (
-              <img
-                key={index}
-                className={classes.multipleImagesWithText}
-                src={attachment}
-              />
-            ))
-          ) : (
-            <img className={classes.oneImageWithText} src={attachments} />
-          )}
+          {<img className={classes.oneImageWithText} src={attachments} />}
         </Box>
         <Box className={classes.bubbleWithTextAndPhoto}>
           <Typography className={classes.text}>{text}</Typography>

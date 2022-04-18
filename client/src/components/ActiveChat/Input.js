@@ -15,6 +15,14 @@ const useStyles = makeStyles(() => ({
     borderRadius: 8,
     marginBottom: 20,
   },
+  fileIcon: {
+    cursor: "pointer",
+    filter:
+      "invert(95%) sepia(5%) saturate(166%) hue-rotate(182deg) brightness(83%) contrast(82%)",
+  },
+  fileInput: {
+    display: "none",
+  },
 }));
 
 const Input = ({ otherUser, conversationId, user, postMessage }) => {
@@ -79,17 +87,10 @@ const Input = ({ otherUser, conversationId, user, postMessage }) => {
           endAdornment={
             <InputAdornment position="end">
               <label htmlFor="file-input">
-                <img
-                  style={{
-                    cursor: "pointer",
-                    filter:
-                      "invert(95%) sepia(5%) saturate(166%) hue-rotate(182deg) brightness(83%) contrast(82%)",
-                  }}
-                  src={contentCopyIcon}
-                />
+                <img className={classes.fileIcon} src={contentCopyIcon} />
               </label>
               <input
-                style={{ display: "none" }}
+                className={classes.fileInput}
                 id="file-input"
                 type="file"
                 onChange={(e) => uploadImage(e.target.files[0])}

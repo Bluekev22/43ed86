@@ -45,7 +45,6 @@ const Input = ({ otherUser, conversationId, user, postMessage }) => {
       })
       .then((data) => {
         const imageURL = data.url;
-        console.log(data);
         setAttachments((prev) => [...prev, imageURL]);
       });
   };

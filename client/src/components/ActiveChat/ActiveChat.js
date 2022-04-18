@@ -33,8 +33,6 @@ const ActiveChat = ({
       )
     : {};
 
-  console.log(conversation);
-
   const isConversation = (obj) => {
     return obj !== {} && obj !== undefined;
   };

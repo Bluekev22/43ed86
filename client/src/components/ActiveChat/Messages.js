@@ -4,7 +4,6 @@ import { SenderBubble, OtherUserBubble } from ".";
 import moment from "moment";
 
 const Messages = (props) => {
-  console.log(props);
   const { messages, otherUser, userId } = props;
 
   return (

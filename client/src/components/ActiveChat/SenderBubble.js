@@ -59,7 +59,6 @@ const useStyles = makeStyles(() => ({
 }));
 
 const SenderBubble = ({ time, text, attachments }) => {
-  console.log(attachments);
   const classes = useStyles();
 
   if (attachments?.length && text) {

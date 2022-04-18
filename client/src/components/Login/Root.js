@@ -7,12 +7,7 @@ import SideCard from "./SideCard";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    [theme.breakpoints.up("lg")]: {
-      flexDirection: "row",
-      justifyContent: "space-between",
-      alignItems: "stretch",
-    },
-    [theme.breakpoints.between("sm", "lg")]: {
+    [theme.breakpoints.up("sm")]: {
       flexDirection: "row",
       justifyContent: "space-between",
       alignItems: "stretch",

@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     [theme.breakpoints.up("lg")]: {
       flexDirection: "row",
-      justifyContent: "center",
+      justifyContent: "space-between",
       alignItems: "stretch",
     },
     [theme.breakpoints.between("sm", "lg")]: {

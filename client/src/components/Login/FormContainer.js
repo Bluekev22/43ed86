@@ -31,7 +31,7 @@ const FormContainer = ({
     <Grid
       container
       item
-      xl={4}
+      xl={9}
       lg={7}
       md={6}
       sm={12}

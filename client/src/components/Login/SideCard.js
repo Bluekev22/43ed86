@@ -49,7 +49,7 @@ const SideCard = () => {
     <Grid
       container
       item
-      xl={4}
+      xl={3}
       lg={4}
       md={3}
       sm={12}

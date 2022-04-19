@@ -35,36 +35,31 @@ const Input = ({ otherUser, conversationId, user, postMessage }) => {
     setText(event.target.value);
   };
 
-  const uploadImage = (file) => {
+  const uploadImage = async (file) => {
     const CLOUD_CREDENTIALS = process.env.REACT_APP_CLOUD_CREDENTIALS;
     const formData = new FormData();
     formData.append("file", file);
     formData.append("upload_preset", CLOUD_CREDENTIALS);
 
-    axios({
-      method: "post",
-      url: "https://api.cloudinary.com/v1_1/kevinshank/image/upload",
-      data: formData,
-      transformRequest: [
-        (data, headers) => {
-          delete headers["x-access-token"];
+    try {
+      const { data } = await axios({
+        method: "post",
+        url: "https://api.cloudinary.com/v1_1/kevinshank/image/upload",
+        data: formData,
+        transformRequest: [
+          (data, headers) => {
+            delete headers["x-access-token"];
 
-          return data;
-        },
-      ],
-    })
-      .then((response) => {
-        if (response.status >= 200 && response.status <= 299) {
-          return response;
-        } else {
-          throw Error(response.statusText);
-        }
-      })
-      .then((data) => {
-        console.log(data);
-        const imageURL = data.data.url;
-        setAttachments((prev) => [...prev, imageURL]);
+            return data;
+          },
+        ],
       });
+      console.log(data);
+      const imageURL = await data.url;
+      setAttachments((prev) => [...prev, imageURL]);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const handleSubmit = async (event) => {

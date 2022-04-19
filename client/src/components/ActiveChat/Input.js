@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import { FormControl, FilledInput, InputAdornment } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import contentCopyIcon from "../../assets/contentCopyIcon.svg";
@@ -40,19 +41,28 @@ const Input = ({ otherUser, conversationId, user, postMessage }) => {
     formData.append("file", file);
     formData.append("upload_preset", CLOUD_CREDENTIALS);
 
-    fetch(`https://api.cloudinary.com/v1_1/kevinshank/image/upload`, {
-      method: "POST",
-      body: formData,
+    axios({
+      method: "post",
+      url: "https://api.cloudinary.com/v1_1/kevinshank/image/upload",
+      data: formData,
+      transformRequest: [
+        (data, headers) => {
+          delete headers["x-access-token"];
+
+          return data;
+        },
+      ],
     })
       .then((response) => {
         if (response.status >= 200 && response.status <= 299) {
-          return response.json();
+          return response;
         } else {
           throw Error(response.statusText);
         }
       })
       .then((data) => {
-        const imageURL = data.url;
+        console.log(data);
+        const imageURL = data.data.url;
         setAttachments((prev) => [...prev, imageURL]);
       });
   };

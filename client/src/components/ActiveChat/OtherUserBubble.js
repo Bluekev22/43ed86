@@ -1,6 +1,8 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Box, Typography, Avatar } from "@material-ui/core";
+import { Box, Avatar } from "@material-ui/core";
+import Text from "./Text";
+import Time from "./Time";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -14,12 +16,6 @@ const useStyles = makeStyles(() => ({
     marginRight: 11,
     marginTop: 6,
   },
-  usernameDate: {
-    fontSize: 11,
-    color: "#BECCE2",
-    fontWeight: "bold",
-    marginBottom: 5,
-  },
   bubble: {
     backgroundImage: "linear-gradient(225deg, #6CC1FF 0%, #3A8DFF 100%)",
     borderRadius: "0 10px 10px 10px",
@@ -28,15 +24,6 @@ const useStyles = makeStyles(() => ({
     backgroundImage: "linear-gradient(225deg, #6CC1FF 0%, #3A8DFF 100%)",
     borderRadius: "10px 10px 0 0",
   },
-  text: {
-    fontSize: 14,
-    fontWeight: "bold",
-    color: "#FFFFFF",
-    letterSpacing: -0.2,
-    padding: 8,
-    textAlign: "center",
-  },
-
   imageContainer: {
     display: "flex",
   },
@@ -60,7 +47,7 @@ const useStyles = makeStyles(() => ({
   multipleImagesWithText: {
     width: "100px",
     height: "77px",
-    borderRadius: "0 0 10px 10px",
+    borderRadius: "10px 10px 10px 0",
     marginRight: "8px",
   },
 }));
@@ -78,7 +65,7 @@ const OtherUserBubble = ({ text, time, otherUser, attachments }) => {
         />
         <Box className={classes.root}>
           <Box className={classes.bubbleWithTextAndPhoto}>
-            <Typography className={classes.text}>{text}</Typography>
+            <Text text={text} sender={false} />
           </Box>
 
           <Box className={classes.imageContainer}>
@@ -90,7 +77,7 @@ const OtherUserBubble = ({ text, time, otherUser, attachments }) => {
               />
             ))}
           </Box>
-          <Typography className={classes.usernameDate}>{time}</Typography>
+          <Time time={time} />
         </Box>
       </Box>
     );
@@ -103,12 +90,12 @@ const OtherUserBubble = ({ text, time, otherUser, attachments }) => {
           className={classes.avatar}
         />
         <Box className={classes.root}>
-          <Typography className={classes.usernameDate}>{time}</Typography>
+          <Time time={time} />
           <Box className={classes.imageContainer}>
             {<img className={classes.oneImageWithText} src={attachments} />}
           </Box>
           <Box className={classes.bubbleWithTextAndPhoto}>
-            <Typography className={classes.text}>{text}</Typography>
+            <Text text={text} sender={false} />
           </Box>
         </Box>
       </Box>
@@ -122,7 +109,7 @@ const OtherUserBubble = ({ text, time, otherUser, attachments }) => {
           className={classes.avatar}
         />
         <Box className={classes.root}>
-          <Typography className={classes.usernameDate}>{time}</Typography>
+          <Time time={time} />
           <Box className={classes.imageContainer}>
             {attachments.length > 1 ? (
               attachments.map((attachment, index) => (
@@ -148,11 +135,9 @@ const OtherUserBubble = ({ text, time, otherUser, attachments }) => {
           className={classes.avatar}
         />
         <Box>
-          <Typography className={classes.usernameDate}>
-            {otherUser.username} {time}
-          </Typography>
+          <Time time={time} username={otherUser.username} />
           <Box className={classes.bubble}>
-            <Typography className={classes.text}>{text}</Typography>
+            <Text text={text} sender={false} />
           </Box>
         </Box>
       </Box>

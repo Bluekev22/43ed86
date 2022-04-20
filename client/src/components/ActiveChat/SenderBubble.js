@@ -1,25 +1,14 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Box, Typography } from "@material-ui/core";
+import { Box } from "@material-ui/core";
+import Text from "./Text";
+import Time from "./Time";
 
 const useStyles = makeStyles(() => ({
   root: {
     display: "flex",
     flexDirection: "column",
     alignItems: "flex-end",
-  },
-  date: {
-    fontSize: 11,
-    color: "#BECCE2",
-    fontWeight: "bold",
-    marginBottom: 5,
-  },
-  text: {
-    fontSize: 14,
-    color: "#91A3C0",
-    letterSpacing: -0.2,
-    padding: 8,
-    fontWeight: "bold",
   },
   bubble: {
     background: "#F4F6FA",
@@ -53,8 +42,9 @@ const useStyles = makeStyles(() => ({
   multipleImagesWithText: {
     width: "100px",
     height: "77px",
-    borderRadius: "10px 10px 0 0",
+    borderRadius: "10px 10px 0 10px",
     marginLeft: "8px",
+    marginTop: "8px",
   },
 }));
 
@@ -65,7 +55,7 @@ const SenderBubble = ({ time, text, attachments }) => {
     return (
       <Box className={classes.root}>
         <Box className={classes.bubbleWithTextAndPhoto}>
-          <Typography className={classes.text}>{text}</Typography>
+          <Text text={text} sender={true} />
         </Box>
         <Box className={classes.imageContainer}>
           {attachments.map((attachment, index) => (
@@ -76,25 +66,25 @@ const SenderBubble = ({ time, text, attachments }) => {
             />
           ))}
         </Box>
-        <Typography className={classes.date}>{time}</Typography>
+        <Time time={time} />
       </Box>
     );
   } else if (attachments?.length === 1 && text) {
     return (
       <Box className={classes.root}>
-        <Typography className={classes.date}>{time}</Typography>
+        <Time time={time} />
         <Box className={classes.imageContainer}>
           {<img className={classes.oneImageWithText} src={attachments} />}
         </Box>
         <Box className={classes.bubbleWithTextAndPhoto}>
-          <Typography className={classes.text}>{text}</Typography>
+          <Text text={text} sender={true} />
         </Box>
       </Box>
     );
   } else if (attachments?.length) {
     return (
       <Box className={classes.root}>
-        <Typography className={classes.date}>{time}</Typography>
+        <Time time={time} />
         <Box className={classes.imageContainer}>
           {attachments.length > 1 ? (
             attachments.map((attachment, index) => (
@@ -113,9 +103,9 @@ const SenderBubble = ({ time, text, attachments }) => {
   } else {
     return (
       <Box className={classes.root}>
-        <Typography className={classes.date}>{time}</Typography>
+        <Time time={time} />
         <Box className={classes.bubble}>
-          <Typography className={classes.text}>{text}</Typography>
+          <Text text={text} sender={true} />
         </Box>
       </Box>
     );

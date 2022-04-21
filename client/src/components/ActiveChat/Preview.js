@@ -3,7 +3,7 @@ import { Box } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles(() => ({
-  previewImageBox: {
+  root: {
     display: "flex",
     justifyContent: "flex-end",
     alignItems: "center",
@@ -24,7 +24,7 @@ const useStyles = makeStyles(() => ({
 const Preview = ({ previewSource }) => {
   const classes = useStyles();
   return (
-    <Box className={classes.previewImageBox}>
+    <Box className={classes.root}>
       {previewSource.length ? (
         <Box className={classes.selectedText}>
           {previewSource.length}&nbsp;selected

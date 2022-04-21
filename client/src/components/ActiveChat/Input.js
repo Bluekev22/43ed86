@@ -85,9 +85,7 @@ const Input = ({ otherUser, conversationId, user, postMessage }) => {
     const form = event.currentTarget;
     const formElements = form.elements;
 
-    const results = await getImages().then((data) => {
-      return data;
-    });
+    const results = await getImages();
     const images = results.map((file) => {
       return file.secure_url;
     });

@@ -36,36 +36,49 @@ const Input = ({ otherUser, conversationId, user, postMessage }) => {
   };
 
   const uploadImage = async (file) => {
+    setAttachments((prev) => [...prev, file]);
+  };
+
+  const getImages = async () => {
     const CLOUD_CREDENTIALS = process.env.REACT_APP_CLOUD_CREDENTIALS;
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("upload_preset", CLOUD_CREDENTIALS);
 
-    try {
-      const { data } = await axios({
-        method: "post",
-        url: "https://api.cloudinary.com/v1_1/kevinshank/image/upload",
-        data: formData,
-        transformRequest: [
-          (data, headers) => {
-            delete headers["x-access-token"];
-
-            return data;
-          },
-        ],
-      });
-      console.log(data);
-      const imageURL = await data.url;
-      setAttachments((prev) => [...prev, imageURL]);
-    } catch (err) {
-      console.log(err);
-    }
+    return Promise.all(
+      attachments.map(async (attachment) => {
+        const formData = new FormData();
+        formData.append("file", attachment);
+        formData.append("upload_preset", CLOUD_CREDENTIALS);
+        try {
+          const { data } = await axios({
+            method: "post",
+            url: "https://api.cloudinary.com/v1_1/kevinshank/image/upload",
+            data: formData,
+            transformRequest: [
+              (data, headers) => {
+                delete headers["x-access-token"];
+                return data;
+              },
+            ],
+          });
+          return data;
+        } catch (err) {
+          console.log(err);
+        }
+      })
+    );
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
     const form = event.currentTarget;
     const formElements = form.elements;
+
+    const results = await getImages().then((data) => {
+      return data;
+    });
+    const images = results.map((file) => {
+      return file.secure_url;
+    });
 
     // add sender user info if posting to a brand new convo, so that the other user will have access to username, profile pic, etc.
     const reqBody = {
@@ -73,7 +86,7 @@ const Input = ({ otherUser, conversationId, user, postMessage }) => {
       recipientId: otherUser.id,
       conversationId,
       sender: conversationId ? null : user,
-      attachments: attachments,
+      attachments: images,
     };
     await postMessage(reqBody);
     setText("");

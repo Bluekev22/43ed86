@@ -1,11 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import {
-  FormControl,
-  FilledInput,
-  InputAdornment,
-  Box,
-} from "@material-ui/core";
+import { FormControl, FilledInput, InputAdornment } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import contentCopyIcon from "../../assets/contentCopyIcon.svg";
 import Preview from "./Preview";

@@ -1,8 +1,14 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { FormControl, FilledInput, InputAdornment } from "@material-ui/core";
+import {
+  FormControl,
+  FilledInput,
+  InputAdornment,
+  Box,
+} from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import contentCopyIcon from "../../assets/contentCopyIcon.svg";
+import Preview from "./Preview";
 require("dotenv").config();
 
 const useStyles = makeStyles(() => ({
@@ -30,6 +36,7 @@ const Input = ({ otherUser, conversationId, user, postMessage }) => {
   const classes = useStyles();
   const [text, setText] = useState("");
   const [attachments, setAttachments] = useState([]);
+  const [previewSource, setPreviewSource] = useState([]);
 
   const handleChange = (event) => {
     setText(event.target.value);
@@ -37,6 +44,11 @@ const Input = ({ otherUser, conversationId, user, postMessage }) => {
 
   const uploadImage = async (file) => {
     setAttachments((prev) => [...prev, file]);
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setPreviewSource((prev) => [...prev, reader.result]);
+    };
   };
 
   const getImages = async () => {
@@ -91,10 +103,12 @@ const Input = ({ otherUser, conversationId, user, postMessage }) => {
     await postMessage(reqBody);
     setText("");
     setAttachments([]);
+    setPreviewSource([]);
   };
 
   return (
     <form className={classes.root} onSubmit={handleSubmit}>
+      <Preview previewSource={previewSource} />
       <FormControl fullWidth hiddenLabel>
         <FilledInput
           classes={{ root: classes.input }}

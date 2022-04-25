@@ -112,7 +112,11 @@ const Input = ({ otherUser, conversationId, user, postMessage }) => {
           endAdornment={
             <InputAdornment position="end">
               <label htmlFor="file-input">
-                <img className={classes.fileIcon} src={contentCopyIcon} />
+                <img
+                  className={classes.fileIcon}
+                  src={contentCopyIcon}
+                  alt=""
+                />
               </label>
               <input
                 className={classes.fileInput}

@@ -117,6 +117,7 @@ const OtherUserBubble = ({ text, time, otherUser, attachments }) => {
                   key={index}
                   className={classes.multipleImages}
                   src={attachment}
+                  alt=""
                 />
               ))
             ) : (

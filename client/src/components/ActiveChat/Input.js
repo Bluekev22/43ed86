@@ -68,7 +68,7 @@ const Input = ({ otherUser, conversationId, user, postMessage }) => {
           });
           return data;
         } catch (err) {
-          console.log(err);
+          console.error(err);
         }
       })
     );

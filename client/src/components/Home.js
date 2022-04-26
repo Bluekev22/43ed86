@@ -1,113 +1,113 @@
-import React, { useCallback, useEffect, useState, useContext } from 'react'
-import axios from 'axios'
-import { useHistory } from 'react-router-dom'
-import { Grid, CssBaseline, Button } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
+import React, { useCallback, useEffect, useState, useContext } from "react";
+import axios from "axios";
+import { useHistory } from "react-router-dom";
+import { Grid, CssBaseline, Button } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 
-import { SidebarContainer } from '../components/Sidebar'
-import { ActiveChat } from '../components/ActiveChat'
-import { SocketContext } from '../context/socket'
+import { SidebarContainer } from "../components/Sidebar";
+import { ActiveChat } from "../components/ActiveChat";
+import { SocketContext } from "../context/socket";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    height: '100vh',
+    height: "100vh",
   },
-}))
+}));
 
 const Home = ({ user, logout }) => {
-  const history = useHistory()
+  const history = useHistory();
 
-  const socket = useContext(SocketContext)
+  const socket = useContext(SocketContext);
 
-  const [conversations, setConversations] = useState([])
-  const [activeConversation, setActiveConversation] = useState(null)
+  const [conversations, setConversations] = useState([]);
+  const [activeConversation, setActiveConversation] = useState(null);
 
-  const classes = useStyles()
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const classes = useStyles();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const addSearchedUsers = (users) => {
-    const currentUsers = {}
+    const currentUsers = {};
 
     // make table of current users so we can lookup faster
     conversations.forEach((convo) => {
-      currentUsers[convo.otherUser.id] = true
-    })
+      currentUsers[convo.otherUser.id] = true;
+    });
 
-    const newState = [...conversations]
+    const newState = [...conversations];
     users.forEach((user) => {
       // only create a fake convo if we don't already have a convo with this user
       if (!currentUsers[user.id]) {
-        let fakeConvo = { otherUser: user, messages: [] }
-        newState.push(fakeConvo)
+        let fakeConvo = { otherUser: user, messages: [] };
+        newState.push(fakeConvo);
       }
-    })
+    });
 
-    setConversations(newState)
-  }
+    setConversations(newState);
+  };
 
   const clearSearchedUsers = () => {
-    setConversations((prev) => prev.filter((convo) => convo.id))
-  }
+    setConversations((prev) => prev.filter((convo) => convo.id));
+  };
 
   const saveMessage = async (body) => {
     try {
-      const { data } = await axios.post('/api/messages', body)
-      return data
+      const { data } = await axios.post("/api/messages", body);
+      return data;
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
-  }
+  };
 
   const sendMessage = (data, body) => {
-    socket.emit('new-message', {
+    socket.emit("new-message", {
       message: data.message,
       recipientId: body.recipientId,
       sender: data.sender,
-    })
-  }
+    });
+  };
 
   const postMessage = async (body) => {
     try {
-      const data = await saveMessage(body)
+      const data = await saveMessage(body);
       if (!body.conversationId) {
-        addNewConvo(body.recipientId, data.message)
+        addNewConvo(body.recipientId, data.message);
       } else {
-        addMessageToConversation(data)
+        addMessageToConversation(data);
       }
 
-      sendMessage(data, body)
+      sendMessage(data, body);
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-  }
+  };
 
   const addNewConvo = useCallback((recipientId, message) => {
     setConversations((prev) =>
       prev.map((convo) => {
         if (convo.otherUser.id === recipientId) {
-          const convoCopy = { ...convo, messages: [...convo.messages] }
-          convoCopy.messages.push(message)
-          convoCopy.latestMessageText = message.text
-          convoCopy.id = message.conversationId
-          return convoCopy
+          const convoCopy = { ...convo, messages: [...convo.messages] };
+          convoCopy.messages.push(message);
+          convoCopy.latestMessageText = message.text;
+          convoCopy.id = message.conversationId;
+          return convoCopy;
         } else {
-          return convo
+          return convo;
         }
       })
-    )
-  }, [])
+    );
+  }, []);
   const addMessageToConversation = useCallback(
     (data) => {
       // if sender isn't null, that means the message needs to be put in a brand new convo
-      const { message, sender = null } = data
+      const { message, sender = null } = data;
       if (sender !== null) {
         const newConvo = {
           id: message.conversationId,
           otherUser: sender,
           messages: [message],
-        }
-        newConvo.latestMessageText = message.text
-        setConversations((prev) => [newConvo, ...prev])
+        };
+        newConvo.latestMessageText = message.text;
+        setConversations((prev) => [newConvo, ...prev]);
       }
 
       setConversations((prev) =>
@@ -116,104 +116,104 @@ const Home = ({ user, logout }) => {
             const convoCopy = {
               ...convo,
               messages: [...convo.messages],
-            }
-            convoCopy.messages.push(message)
-            convoCopy.latestMessageText = message.text
-            return convoCopy
+            };
+            convoCopy.messages.push(message);
+            convoCopy.latestMessageText = message.text;
+            return convoCopy;
           } else {
-            return convo
+            return convo;
           }
         })
-      )
+      );
     },
     [setConversations, conversations]
-  )
+  );
 
   const setActiveChat = (username) => {
-    setActiveConversation(username)
-  }
+    setActiveConversation(username);
+  };
 
   const addOnlineUser = useCallback((id) => {
     setConversations((prev) =>
       prev.map((convo) => {
         if (convo.otherUser.id === id) {
-          const convoCopy = { ...convo }
-          convoCopy.otherUser = { ...convoCopy.otherUser, online: true }
-          return convoCopy
+          const convoCopy = { ...convo };
+          convoCopy.otherUser = { ...convoCopy.otherUser, online: true };
+          return convoCopy;
         } else {
-          return convo
+          return convo;
         }
       })
-    )
-  }, [])
+    );
+  }, []);
 
   const removeOfflineUser = useCallback((id) => {
     setConversations((prev) =>
       prev.map((convo) => {
         if (convo.otherUser.id === id) {
-          const convoCopy = { ...convo }
-          convoCopy.otherUser = { ...convoCopy.otherUser, online: false }
-          return convoCopy
+          const convoCopy = { ...convo };
+          convoCopy.otherUser = { ...convoCopy.otherUser, online: false };
+          return convoCopy;
         } else {
-          return convo
+          return convo;
         }
       })
-    )
-  }, [])
+    );
+  }, []);
 
   // Lifecycle
 
   useEffect(() => {
     // Socket init
-    socket.on('add-online-user', addOnlineUser)
-    socket.on('remove-offline-user', removeOfflineUser)
-    socket.on('new-message', addMessageToConversation)
+    socket.on("add-online-user", addOnlineUser);
+    socket.on("remove-offline-user", removeOfflineUser);
+    socket.on("new-message", addMessageToConversation);
 
     return () => {
       // before the component is destroyed
       // unbind all event handlers used in this component
-      socket.off('add-online-user', addOnlineUser)
-      socket.off('remove-offline-user', removeOfflineUser)
-      socket.off('new-message', addMessageToConversation)
-    }
-  }, [addMessageToConversation, addOnlineUser, removeOfflineUser, socket])
+      socket.off("add-online-user", addOnlineUser);
+      socket.off("remove-offline-user", removeOfflineUser);
+      socket.off("new-message", addMessageToConversation);
+    };
+  }, [addMessageToConversation, addOnlineUser, removeOfflineUser, socket]);
 
   useEffect(() => {
     // when fetching, prevent redirect
-    if (user?.isFetching) return
+    if (user?.isFetching) return;
 
     if (user && user.id) {
-      setIsLoggedIn(true)
+      setIsLoggedIn(true);
     } else {
       // If we were previously logged in, redirect to login instead of register
-      if (isLoggedIn) history.push('/login')
-      else history.push('/register')
+      if (isLoggedIn) history.push("/login");
+      else history.push("/register");
     }
-  }, [user, history, isLoggedIn])
+  }, [user, history, isLoggedIn]);
 
   useEffect(() => {
     const fetchConversations = async () => {
       try {
-        const { data } = await axios.get('/api/conversations')
+        const { data } = await axios.get("/api/conversations");
         //Reverse order of messages to reflect chronological order
         data.forEach((user) => {
-          user.messages = user.messages.reverse()
-        })
-        setConversations(data)
+          user.messages = user.messages.reverse();
+        });
+        setConversations(data);
       } catch (error) {
-        console.error(error)
+        console.error(error);
       }
-    }
+    };
     if (!user.isFetching) {
-      fetchConversations()
+      fetchConversations();
     }
-  }, [user])
+  }, [user]);
 
   const handleLogout = async () => {
     if (user && user.id) {
-      await logout(user.id)
+      await logout(user.id);
     }
-  }
+  };
 
   return (
     <>
@@ -235,7 +235,7 @@ const Home = ({ user, logout }) => {
         />
       </Grid>
     </>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

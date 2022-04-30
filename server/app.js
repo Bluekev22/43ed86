@@ -70,11 +70,13 @@ app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "../client/build/index.html"));
 });
 
-db.once("open", () => {
-  app.listen(PORT, () => {
-    console.log(`API server running on port ${PORT}!`);
-    console.log(`Use GraphQL at http://localhost:${PORT}${server.graphqlPath}`);
+try {
+  await sequelize.sync({ force: false });
+  app.listen(PORT, async () => {
+    console.log(`Server listening on port ${PORT}`);
   });
-});
+} catch (err) {
+  console.error(err);
+}
 
 module.exports = { app, sessionStore };

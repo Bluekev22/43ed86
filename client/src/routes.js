@@ -16,6 +16,7 @@ const Routes = (props) => {
   const [snackBarOpen, setSnackBarOpen] = useState(false);
 
   const login = async (credentials) => {
+    console.log(credentials);
     try {
       const { data } = await axios.post("/auth/login", credentials);
       await localStorage.setItem("messenger-token", data.token);
@@ -28,6 +29,7 @@ const Routes = (props) => {
   };
 
   const register = async (credentials) => {
+    console.log(credentials);
     try {
       const { data } = await axios.post("/auth/register", credentials);
       await localStorage.setItem("messenger-token", data.token);

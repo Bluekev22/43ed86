@@ -70,13 +70,8 @@ app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "../client/build/index.html"));
 });
 
-try {
-  await sequelize.sync({ force: false });
-  app.listen(PORT, async () => {
-    console.log(`Server listening on port ${PORT}`);
-  });
-} catch (err) {
-  console.error(err);
-}
+app.listen(PORT, async () => {
+  console.log(`Server listening on port ${PORT}`);
+});
 
 module.exports = { app, sessionStore };

@@ -1,5 +1,6 @@
 const createError = require("http-errors");
 const express = require("express");
+const path = require("path");
 const { join } = require("path");
 const logger = require("morgan");
 const jwt = require("jsonwebtoken");

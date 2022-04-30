@@ -31,6 +31,16 @@ const useStyles = makeStyles((theme) => ({
 const Form = ({ form, handler, formErrorMessage }) => {
   const classes = useStyles();
 
+  const [formState, setFormState] = useState({ email: "", password: "" });
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormState({
+      ...formState,
+      [name]: value,
+    });
+  };
+
   if (form === "login") {
     return (
       <form onSubmit={handler}>
@@ -39,8 +49,9 @@ const Form = ({ form, handler, formErrorMessage }) => {
             className={classes.textField}
             aria-label="E-mail address"
             label="E-mail address"
-            name="E-mail address"
+            name="email"
             type="text"
+            onChange={handleChange}
           />
         </FormControl>
         <FormControl margin="normal" required>
@@ -50,6 +61,7 @@ const Form = ({ form, handler, formErrorMessage }) => {
             aria-label="Password"
             type="Password"
             name="Password"
+            onChange={handleChange}
             InputProps={{
               endAdornment: (
                 <Typography className={classes.forgotPassword}>

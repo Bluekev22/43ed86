@@ -2,7 +2,8 @@ const Sequelize = require("sequelize");
 require("dotenv").config();
 
 const db = new Sequelize(
-  process.env.DATABASE_URL,
+  process.env.DATABASE_URL ||
+    `postgres://${process.env.REACT_APP_DATABASE_CREDENTIALS}@localhost:5432/messenger`,
   {
     dialect: "postgres",
     dialectOptions: {
@@ -11,10 +12,6 @@ const db = new Sequelize(
         rejectUnauthorized: false,
       },
     },
-  } ||
-    `postgres://${process.env.REACT_APP_DATABASE_CREDENTIALS}@localhost:5432/messenger`,
-  {
-    logging: false,
   }
 );
 

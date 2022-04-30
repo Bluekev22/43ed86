@@ -4,7 +4,7 @@
   "description": "A one-to-one realtime chat app.",
   "main": "index.js",
   "scripts": {
-    "start": "node server/server.js",
+    "start": "node server/app.js",
     "install": "cd server && npm i && cd ../client && npm i",
     "seed": "cd server && npm run seed",
     "build": "cd client && npm run build"

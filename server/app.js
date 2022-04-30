@@ -10,7 +10,10 @@ const db = require("./db");
 const { User } = require("./db/models");
 // create store for sessions to persist in database
 const sessionStore = new SequelizeStore({ db });
-require("dotenv").config();
+require("dotenv").config({
+  path: path.resolve(process.cwd(), "client", ".env.development"),
+  debug: true,
+});
 
 const { json, urlencoded } = express;
 
@@ -25,7 +28,7 @@ app.use(express.static(join(__dirname, "public")));
 app.use(function (req, res, next) {
   const token = req.headers["x-access-token"];
   if (token) {
-    jwt.verify(token, process.env.SESSION_SECRET, (err, decoded) => {
+    jwt.verify(token, process.env.REACT_APP_SESSION_SECRET, (err, decoded) => {
       if (err) {
         return next();
       }

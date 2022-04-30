@@ -14,6 +14,7 @@ require("dotenv").config();
 
 const { json, urlencoded } = express;
 
+const PORT = process.env.PORT || 3001;
 const app = express();
 
 app.use(logger("dev"));

@@ -49,8 +49,8 @@ const Form = ({ form, handler, formErrorMessage, handleChange }) => {
             className={classes.textField}
             label="Password"
             aria-label="Password"
-            type="Password"
-            name="Password"
+            type="password"
+            name="password"
             onChange={handleChange}
             InputProps={{
               endAdornment: (

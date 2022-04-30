@@ -23,7 +23,7 @@ router.post("/register", async (req, res, next) => {
 
     const token = jwt.sign(
       { id: user.dataValues.id },
-      process.env.SESSION_SECRET,
+      process.env.REACT_APP_SESSION_SECRET,
       { expiresIn: 86400 }
     );
     res.json({
@@ -61,7 +61,7 @@ router.post("/login", async (req, res, next) => {
     } else {
       const token = jwt.sign(
         { id: user.dataValues.id },
-        process.env.SESSION_SECRET,
+        process.env.REACT_APP_SESSION_SECRET,
         { expiresIn: 86400 }
       );
       res.json({

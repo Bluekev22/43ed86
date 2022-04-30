@@ -5,7 +5,7 @@ import Root from "./components/Login/Root";
 const Login = ({ user, login }) => {
   const history = useHistory();
 
-  const [formState, setFormState] = useState({ email: "", password: "" });
+  const [formState, setFormState] = useState({ username: "", password: "" });
 
   const handleChange = (event) => {
     const { name, value } = event.target;

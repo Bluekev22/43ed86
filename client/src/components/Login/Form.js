@@ -37,9 +37,9 @@ const Form = ({ form, handler, formErrorMessage, handleChange }) => {
         <FormControl margin="normal" required>
           <TextField
             className={classes.textField}
-            aria-label="E-mail address"
-            label="E-mail address"
-            name="email"
+            aria-label="username"
+            label="username"
+            name="username"
             type="text"
             onChange={handleChange}
           />

@@ -11,6 +11,7 @@ const Login = ({ user, login }) => {
     const formElements = form.elements;
     const username = formElements.username.value;
     const password = formElements.password.value;
+    console.log(username, password);
 
     await login({ username, password });
   };

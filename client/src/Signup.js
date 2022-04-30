@@ -5,16 +5,30 @@ import Root from "./components/Login/Root";
 const Signup = ({ user, register }) => {
   const history = useHistory();
 
+  const [formState, setFormState] = useState({
+    email: "",
+    username: "",
+    password: "",
+    confirmPassword: "",
+  });
+
   const [formErrorMessage, setFormErrorMessage] = useState({});
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormState({
+      ...formState,
+      [name]: value,
+    });
+  };
 
   const handleRegister = async (event) => {
     event.preventDefault();
-    const form = event.currentTarget;
-    const formElements = form.elements;
-    const username = formElements.username.value;
-    const email = formElements.email.value;
-    const password = formElements.password.value;
-    const confirmPassword = formElements.confirmPassword.value;
+
+    const username = formState.username;
+    const email = formState.email;
+    const password = formState.password;
+    const confirmPassword = formState.confirmPassword;
 
     if (password !== confirmPassword) {
       setFormErrorMessage({ confirmPassword: "Passwords must match" });
@@ -36,6 +50,7 @@ const Signup = ({ user, register }) => {
       form="signup"
       handler={handleRegister}
       formErrorMessage={formErrorMessage}
+      handleChange={handleChange}
     />
   );
 };

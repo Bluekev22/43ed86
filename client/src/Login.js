@@ -5,15 +5,24 @@ import Root from "./components/Login/Root";
 const Login = ({ user, login }) => {
   const history = useHistory();
 
+  const [formState, setFormState] = useState({ email: "", password: "" });
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormState({
+      ...formState,
+      [name]: value,
+    });
+  };
+
   const handleLogin = async (event) => {
     event.preventDefault();
-    const form = event.currentTarget;
-    const formElements = form.elements;
-    const username = formElements.username.value;
-    const password = formElements.password.value;
-    console.log(username, password);
 
-    await login({ username, password });
+    const email = formState.email;
+    const password = formState.password;
+    console.log(email, password);
+
+    await login({ email, password });
   };
 
   useEffect(() => {
@@ -28,6 +37,7 @@ const Login = ({ user, login }) => {
       statement="Welcome back!"
       form="login"
       handler={handleLogin}
+      handleChange={handleChange}
     />
   );
 };

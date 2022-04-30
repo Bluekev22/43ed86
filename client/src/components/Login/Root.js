@@ -28,6 +28,7 @@ const Root = ({
   form,
   handler,
   formErrorMessage,
+  handleChange,
 }) => {
   const classes = useStyles();
   const theme = useTheme();
@@ -43,6 +44,7 @@ const Root = ({
         form={form}
         handler={handler}
         formErrorMessage={formErrorMessage}
+        handleChange={handleChange}
       />
     </Grid>
   );

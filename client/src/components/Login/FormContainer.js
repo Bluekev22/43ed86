@@ -25,6 +25,7 @@ const FormContainer = ({
   form,
   handler,
   formErrorMessage,
+  handleChange,
 }) => {
   const classes = useStyles();
   return (
@@ -44,6 +45,7 @@ const FormContainer = ({
         form={form}
         handler={handler}
         formErrorMessage={formErrorMessage}
+        handleChange={handleChange}
       />
     </Grid>
   );

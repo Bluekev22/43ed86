@@ -24,7 +24,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const LoginContainer = ({ statement, form, handler, formErrorMessage }) => {
+const LoginContainer = ({
+  statement,
+  form,
+  handler,
+  formErrorMessage,
+  handleChange,
+}) => {
   const classes = useStyles();
   return (
     <Grid
@@ -40,6 +46,7 @@ const LoginContainer = ({ statement, form, handler, formErrorMessage }) => {
           form={form}
           handler={handler}
           formErrorMessage={formErrorMessage}
+          handleChange={handleChange}
         />
       </Grid>
     </Grid>

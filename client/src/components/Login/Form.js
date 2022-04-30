@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Grid,
   Typography,
@@ -28,18 +28,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Form = ({ form, handler, formErrorMessage }) => {
+const Form = ({ form, handler, formErrorMessage, handleChange }) => {
   const classes = useStyles();
-
-  const [formState, setFormState] = useState({ email: "", password: "" });
-
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setFormState({
-      ...formState,
-      [name]: value,
-    });
-  };
 
   if (form === "login") {
     return (
@@ -89,6 +79,7 @@ const Form = ({ form, handler, formErrorMessage }) => {
                 label="Username"
                 name="username"
                 type="text"
+                onChange={handleChange}
                 required
               />
             </FormControl>
@@ -101,6 +92,7 @@ const Form = ({ form, handler, formErrorMessage }) => {
                 aria-label="e-mail address"
                 type="email"
                 name="email"
+                onChange={handleChange}
                 required
               />
             </FormControl>
@@ -114,6 +106,7 @@ const Form = ({ form, handler, formErrorMessage }) => {
                 type="password"
                 inputProps={{ minLength: 6 }}
                 name="password"
+                onChange={handleChange}
                 required
               />
               <FormHelperText>
@@ -130,6 +123,7 @@ const Form = ({ form, handler, formErrorMessage }) => {
                 type="password"
                 inputProps={{ minLength: 6 }}
                 name="confirmPassword"
+                onChange={handleChange}
                 required
               />
               <FormHelperText>

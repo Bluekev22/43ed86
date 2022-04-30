@@ -18,11 +18,10 @@ const Login = ({ user, login }) => {
   const handleLogin = async (event) => {
     event.preventDefault();
 
-    const email = formState.email;
+    const username = formState.username;
     const password = formState.password;
-    console.log(email, password);
 
-    await login({ email, password });
+    await login({ username, password });
   };
 
   useEffect(() => {

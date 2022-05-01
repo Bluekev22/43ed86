@@ -2,40 +2,44 @@ const Sequelize = require("sequelize");
 const db = require("../db");
 const crypto = require("crypto");
 
-const User = db.define("user", {
-  username: {
-    type: Sequelize.STRING,
-    unique: true,
-    allowNull: false
-  },
-  email: {
-    type: Sequelize.STRING,
-    unique: true,
-    alloWNull: false,
-    validate: {
-      isEmail: true
-    }
-  },
-  photoUrl: {
-    type: Sequelize.STRING
-  },
-  password: {
-    type: Sequelize.STRING,
-    validate: {
-      min: 6
+const User = db.define(
+  "user",
+  {
+    username: {
+      type: Sequelize.STRING,
+      unique: true,
+      allowNull: false,
     },
-    allowNull: false,
-    get() {
-      return () => this.getDataValue("password");
-    }
+    email: {
+      type: Sequelize.STRING,
+      unique: true,
+      alloWNull: false,
+      validate: {
+        isEmail: true,
+      },
+    },
+    photoUrl: {
+      type: Sequelize.STRING,
+    },
+    password: {
+      type: Sequelize.STRING,
+      validate: {
+        min: 6,
+      },
+      allowNull: false,
+      get() {
+        return () => this.getDataValue("password");
+      },
+    },
+    salt: {
+      type: Sequelize.STRING,
+      get() {
+        return () => this.getDataValue("salt");
+      },
+    },
   },
-  salt: {
-    type: Sequelize.STRING,
-    get() {
-      return () => this.getDataValue("salt");
-    }
-  }
-});
+  { freezeTableName: true }
+);
 
 User.prototype.correctPassword = function (password) {
   return User.encryptPassword(password, this.salt()) === this.password();
@@ -46,7 +50,11 @@ User.createSalt = function () {
 };
 
 User.encryptPassword = function (plainPassword, salt) {
-  return crypto.createHash("RSA-SHA256").update(plainPassword).update(salt).digest("hex");
+  return crypto
+    .createHash("RSA-SHA256")
+    .update(plainPassword)
+    .update(salt)
+    .digest("hex");
 };
 
 const setSaltAndPassword = (user) => {
